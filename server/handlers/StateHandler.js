@@ -62,6 +62,15 @@ class StateHandler {
 
   }
 
+  hasUnitAt ( x, y ) {
+    for ( let id in this.entities ) {
+      if ( this.entities [ id ] instanceof Unit &&
+           this.entities [ id ].data.x === x && this.entities [ id ].data.y === y ) {
+        return true
+      }
+    }
+    return false
+  }
 
   parseObject ( type, object ) {
 
@@ -89,6 +98,7 @@ class StateHandler {
       case "neutral-units":
 
         let unitSpawnPoint = new UnitSpawnPoint( obj )
+        this.clock.setInterval( unitSpawnPoint.spawn.bind(unitSpawnPoint, this), unitSpawnPoint.spawnInterval  )
         this.addEntity( unitSpawnPoint )
 
         break;

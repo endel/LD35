@@ -24,13 +24,13 @@ export default class TitleScene extends PIXI.Container {
     this.addChild( this.scenery )
 
     // let battleUnit = new BattleUnit([
-    //     { team: 0, attack: 1, defense: 1 },
-    //     { team: 0, attack: 1, defense: 2 },
-    //     { team: 1, attack: 2, defense: 1 },
-    //     { team: 1, attack: 1, defense: 3 },
+    //     { side: 0, attack: 1, defense: 1 },
+    //     { side: 0, attack: 1, defense: 2 },
+    //     { side: 2, attack: 2, defense: 1 },
+    //     { side: 2, attack: 1, defense: 3 },
     // ])
     // battleUnit.x = 300
-    // battleUnit.y = 100
+    // battleUnit.y = MAPSIZE
     // this.addChild( battleUnit )
 
     this.room = join( 'battle', { name: "Jake Badlands" } )
@@ -142,6 +142,10 @@ export default class TitleScene extends PIXI.Container {
     }
 
     this.addChild( entity )
+
+    // entity entering animation
+    App.tweens.add( entity ).from({ opacity: 0 }, 600, Tweener.ease.quadOut)
+    App.tweens.add( entity.scale ).from({ x: 0.4, y: 0.4 }, 500, Tweener.ease.bounceOut)
 
     if ( data.data.x || data.data.y ) {
       entity.x = data.data.x

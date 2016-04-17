@@ -1,5 +1,9 @@
 // const EventEmitter = require('events').EventEmitter
+
+const Unit = require('./Unit.js')
 const uniqid = require('uniqid')
+
+const randomFactor = 2
 
 class UnitSpawnPoint { // extends EventEmitter
 
@@ -17,6 +21,27 @@ class UnitSpawnPoint { // extends EventEmitter
 
     this.side = data.properties.side
     this.lvl = data.properties.lvl
+
+    // One minute
+    // this.spawnInterval = 1000 * 60
+    this.spawnInterval = 1000
+
+  }
+
+  spawn ( stateHandler ) {
+
+    if ( ! stateHandler.hasUnitAt( this.data.x, this.data.y ) ) {
+      let unit = new Unit( {
+        x: this.data.x,
+        y: this.data.y,
+        properties: {
+          attack: this.lvl - Math.floor( Math.random() * randomFactor ) + Math.floor( Math.random() * randomFactor ),
+          defense: this.lvl - Math.floor( Math.random() * randomFactor ) + Math.floor( Math.random() * randomFactor ),
+          side: this.side
+        }
+      } )
+      stateHandler.addEntity( unit )
+    }
 
   }
 

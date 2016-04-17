@@ -15,14 +15,10 @@ export default class BattleUnit extends PIXI.Container {
 
     this.circlePlayer = new PIXI.Graphics()
     if (hasBorder) { this.circlePlayer.lineStyle ( 1 , 0x000000, 0.8 ); }
-    this.circlePlayer.beginFill( config.colors.player );
-    this.circlePlayer.drawCircle( 0, 0, radius );
     this.addChild( this.circlePlayer )
 
     this.circleEnemy = new PIXI.Graphics()
     if (hasBorder) { this.circleEnemy.lineStyle ( 1 , 0x000000, 0.8 ); }
-    this.circleEnemy.beginFill( config.colors.enemy );
-    this.circleEnemy.drawCircle( 0, 0, radius );
     this.addChild( this.circleEnemy )
 
     //
@@ -54,6 +50,14 @@ export default class BattleUnit extends PIXI.Container {
 
     this.updateUnits( units )
 
+    let battleBetweenSides = Object.keys(this.teams)
+
+    this.circlePlayer.beginFill( config.colors[ battleBetweenSides[0] ] );
+    this.circlePlayer.drawCircle( 0, 0, radius );
+
+    this.circleEnemy.beginFill( config.colors[ battleBetweenSides[1] ] );
+    this.circleEnemy.drawCircle( 0, 0, radius );
+
     this.setPercentage( 0.5 )
 
   }
@@ -76,18 +80,21 @@ export default class BattleUnit extends PIXI.Container {
 
     App.tweens.add( this.scale ).from( { x: 1.3, y: 1.3 }, 500, Tweener.ease.quadOut )
 
-    let teams = [{ attack: 0, defense: 0 }, { attack: 0, defense: 0 }]
+    this.teams = {}
+
     units.map( unit => {
-      teams[ unit.team ].defense += unit.defense
-      teams[ unit.team ].attack += unit.attack
+      if ( !this.teams[ unit.side ] ) {
+        this.teams[ unit.side ] = { attack: 0, defense: 0 }
+      }
+
+      this.teams[ unit.side ].defense += unit.defense
+      this.teams[ unit.side ].attack += unit.attack
     } )
 
-    this.playerAttributes.updateAttributes(teams[0])
-    this.enemyAttributes.updateAttributes(teams[1])
+    let battleBetweenSides = Object.keys(this.teams)
+    this.playerAttributes.updateAttributes( this.teams[ battleBetweenSides[0] ] )
+    this.enemyAttributes.updateAttributes( this.teams[ battleBetweenSides[1] ] )
 
   }
 
 }
-
-
-
