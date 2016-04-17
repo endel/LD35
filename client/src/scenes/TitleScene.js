@@ -46,6 +46,7 @@ export default class TitleScene extends PIXI.Container {
   }
 
   onRoomUpdate ( state, patches ) {
+
     if ( !patches ) {
 
       this.setupMap( state )
@@ -58,24 +59,28 @@ export default class TitleScene extends PIXI.Container {
 
         let [ _, entityId ] = patch.path.match(/\/entities\/([a-zA-Z0-9_-]+)/)
 
+        if ( this.entities[ entityId ] ) {
+
+          // Update battle units
+          // Add units to battle unit
+          if ( patch.path.indexOf("/units") > 0 ) {
+
+            this.entities[ entityId ].updateUnits(
+              Object.keys( state.entities[ entityId ].units ).map( id => this.entities[ id ] )
+            )
+
+            continue
+
+          }
+        }
+
         if ( patch.op === "add" && entityId ) {
 
-          if ( this.entities[ entityId ] ) {
-            // add attribute to entity
-
-            // add units to battle unit
-            if ( patch.path.indexOf("/units") > 0 ) {
-
-              this.entities[ entityId ].updateUnits(
-                Object.keys( state.entities[ entityId ].units ).map( id => this.entities[ id ] )
-              )
-
-            }
-
-          } else {
+          if ( ! this.entities[ entityId ] ) {
 
             // create new entity
             this.createEntity ( entityId, patch.value )
+
           }
 
         } else if ( patch.op === "replace" && this.entities[ entityId ] ) {
@@ -103,6 +108,13 @@ export default class TitleScene extends PIXI.Container {
 
             // this.entities[ entityId ].incoming[ attr1 ] = patch.value
           }
+
+        } else if ( patch.op === "remove" && this.entities[ entityId ] && patch.path.match(/\/entities\/([a-zA-Z0-9_-]+)$/) ) {
+
+          // console.log( "Remove unit:", entityId )
+
+          this.entities[ entityId ].kill()
+          delete this.entities[ entityId ]
 
         }
 

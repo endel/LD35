@@ -1,4 +1,8 @@
 const uniqid = require('uniqid')
+const config = require('../config.js')
+
+var battleInstances = new WeakMap()
+var lastBattleAbandon = new WeakMap()
 
 class Unit {
 
@@ -24,12 +28,30 @@ class Unit {
 
   }
 
+  get isAvailableForBattle () {
+
+    // units can join in battle again only after 1 sec abandoning
+    return (lastBattleAbandon.get( this ) || 0) + config.abandonTimeout < Date.now()
+
+  }
+
+
   moveTo ( point ) {
 
     this.destiny = point
 
+    if ( this.isBattling ) {
+      battleInstances.get( this ).leave( this, true )
+      lastBattleAbandon.set( this, Date.now() )
+    }
+
   }
 
+  set battle ( battle ) {
+
+    battleInstances.set( this, battle )
+
+  }
 
 }
 

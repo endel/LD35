@@ -52,9 +52,9 @@ class Tower extends Unit {
     })
 
     // creep destiny is always the opposite tower
-    creep.destiny = state.towers.filter(tower => tower.side !== this.side)[0].position
-
-    console.log("Spawn!", creep, creep.destiny)
+    creep.destiny = state.towers.filter(tower => {
+      return tower.side !== this.side && tower.position.x === this.position.x
+    })[0].position
 
     state.addEntity( creep )
 

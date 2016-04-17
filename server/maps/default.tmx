@@ -1,28 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="48" tileheight="48">
  <objectgroup color="#ff0000" name="towers">
-  <object type="tower" x="720" y="1296" width="48" height="48">
+  <object type="tower" x="912" y="1296" width="48" height="48">
    <properties>
     <property name="attack" value="5"/>
     <property name="defense" value="30"/>
     <property name="side" value="0"/>
    </properties>
   </object>
-  <object type="tower" x="720" y="96" width="48" height="48">
+  <object type="tower" x="912" y="96" width="48" height="48">
    <properties>
     <property name="attack" value="5"/>
     <property name="defense" value="30"/>
     <property name="side" value="1"/>
    </properties>
   </object>
+  <object type="tower" x="528" y="96" width="48" height="48">
+   <properties>
+    <property name="attack" value="5"/>
+    <property name="defense" value="30"/>
+    <property name="side" value="1"/>
+   </properties>
+  </object>
+  <object type="tower" x="528" y="1296" width="48" height="48">
+   <properties>
+    <property name="attack" value="5"/>
+    <property name="defense" value="30"/>
+    <property name="side" value="0"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup color="#001cff" name="spawn-points">
-  <object type="tower" x="624" y="1296" width="48" height="48">
+  <object type="tower" x="720" y="1296" width="48" height="48">
    <properties>
     <property name="side" value="0"/>
    </properties>
   </object>
-  <object type="tower" x="816" y="96" width="48" height="48">
+  <object type="tower" x="720" y="96" width="48" height="48">
    <properties>
     <property name="side" value="1"/>
    </properties>
@@ -102,10 +116,10 @@
   <object type="tower" x="336" y="912" width="48" height="48"/>
   <object type="tower" x="1056" y="384" width="48" height="48"/>
   <object type="tower" x="336" y="672" width="48" height="48"/>
-  <object type="tower" x="960" y="672" width="48" height="48"/>
+  <object type="tower" x="1008" y="672" width="48" height="48"/>
   <object type="tower" x="432" y="480" width="48" height="48"/>
-  <object type="tower" x="528" y="912" width="48" height="48"/>
-  <object type="tower" x="912" y="528" width="48" height="48"/>
+  <object type="tower" x="432" y="912" width="48" height="48"/>
+  <object type="tower" x="960" y="528" width="48" height="48"/>
   <object type="tower" x="1056" y="864" width="48" height="48"/>
   <object type="tower" x="1248" y="1152" width="48" height="48"/>
   <object type="tower" x="1152" y="1296" width="48" height="48"/>
@@ -115,10 +129,10 @@
   <object type="tower" x="240" y="144" width="48" height="48"/>
   <object type="tower" x="336" y="288" width="48" height="48"/>
   <object type="tower" x="1008" y="240" width="48" height="48"/>
-  <object type="tower" x="576" y="624" width="48" height="48"/>
-  <object type="tower" x="864" y="816" width="48" height="48"/>
-  <object type="tower" x="960" y="1152" width="48" height="48"/>
-  <object type="tower" x="528" y="240" width="48" height="48"/>
+  <object type="tower" x="432" y="624" width="48" height="48"/>
+  <object type="tower" x="960" y="816" width="48" height="48"/>
+  <object type="tower" x="1008" y="1152" width="48" height="48"/>
+  <object type="tower" x="432" y="240" width="48" height="48"/>
   <object type="tower" x="0" y="1152" width="48" height="48"/>
   <object type="tower" x="0" y="1248" width="48" height="48"/>
   <object type="tower" x="0" y="1296" width="48" height="48"/>
@@ -224,31 +238,65 @@
   <object type="tower" x="1344" y="768" width="48" height="48"/>
   <object type="tower" x="1392" y="720" width="48" height="48"/>
   <object type="tower" x="1392" y="816" width="48" height="48"/>
+  <object type="tower" x="720" y="576" width="48" height="48"/>
+  <object type="tower" x="720" y="816" width="48" height="48"/>
+  <object type="tower" x="768" y="768" width="48" height="48"/>
+  <object type="tower" x="768" y="624" width="48" height="48"/>
+  <object type="tower" x="720" y="1056" width="48" height="48"/>
+  <object type="tower" x="768" y="1056" width="48" height="48"/>
+  <object type="tower" x="768" y="384" width="48" height="48"/>
+  <object type="tower" x="720" y="336" width="48" height="48"/>
+  <object type="tower" x="672" y="1008" width="48" height="48"/>
+  <object type="tower" x="672" y="336" width="48" height="48"/>
  </objectgroup>
  <objectgroup color="#c8c8c8" name="way">
-  <object type="tower" x="720" y="144" width="48" height="48"/>
-  <object type="tower" x="720" y="192" width="48" height="48"/>
-  <object type="tower" x="720" y="240" width="48" height="48"/>
-  <object type="tower" x="720" y="288" width="48" height="48"/>
-  <object type="tower" x="720" y="336" width="48" height="48"/>
-  <object type="tower" x="720" y="384" width="48" height="48"/>
-  <object type="tower" x="720" y="432" width="48" height="48"/>
-  <object type="tower" x="720" y="480" width="48" height="48"/>
-  <object type="tower" x="720" y="528" width="48" height="48"/>
-  <object type="tower" x="720" y="576" width="48" height="48"/>
-  <object type="tower" x="720" y="624" width="48" height="48"/>
-  <object type="tower" x="720" y="672" width="48" height="48"/>
-  <object type="tower" x="720" y="720" width="48" height="48"/>
-  <object type="tower" x="720" y="768" width="48" height="48"/>
-  <object type="tower" x="720" y="816" width="48" height="48"/>
-  <object type="tower" x="720" y="864" width="48" height="48"/>
-  <object type="tower" x="720" y="912" width="48" height="48"/>
-  <object type="tower" x="720" y="960" width="48" height="48"/>
-  <object type="tower" x="720" y="1008" width="48" height="48"/>
-  <object type="tower" x="720" y="1056" width="48" height="48"/>
-  <object type="tower" x="720" y="1104" width="48" height="48"/>
-  <object type="tower" x="720" y="1200" width="48" height="48"/>
-  <object type="tower" x="720" y="1152" width="48" height="48"/>
-  <object type="tower" x="720" y="1248" width="48" height="48"/>
+  <object type="tower" x="912" y="144" width="48" height="48"/>
+  <object type="tower" x="912" y="192" width="48" height="48"/>
+  <object type="tower" x="912" y="240" width="48" height="48"/>
+  <object type="tower" x="912" y="288" width="48" height="48"/>
+  <object type="tower" x="912" y="336" width="48" height="48"/>
+  <object type="tower" x="912" y="384" width="48" height="48"/>
+  <object type="tower" x="912" y="432" width="48" height="48"/>
+  <object type="tower" x="912" y="480" width="48" height="48"/>
+  <object type="tower" x="912" y="528" width="48" height="48"/>
+  <object type="tower" x="912" y="576" width="48" height="48"/>
+  <object type="tower" x="912" y="624" width="48" height="48"/>
+  <object type="tower" x="912" y="672" width="48" height="48"/>
+  <object type="tower" x="912" y="720" width="48" height="48"/>
+  <object type="tower" x="912" y="768" width="48" height="48"/>
+  <object type="tower" x="912" y="816" width="48" height="48"/>
+  <object type="tower" x="912" y="864" width="48" height="48"/>
+  <object type="tower" x="912" y="912" width="48" height="48"/>
+  <object type="tower" x="912" y="960" width="48" height="48"/>
+  <object type="tower" x="912" y="1008" width="48" height="48"/>
+  <object type="tower" x="912" y="1056" width="48" height="48"/>
+  <object type="tower" x="912" y="1104" width="48" height="48"/>
+  <object type="tower" x="912" y="1200" width="48" height="48"/>
+  <object type="tower" x="912" y="1152" width="48" height="48"/>
+  <object type="tower" x="912" y="1248" width="48" height="48"/>
+  <object type="tower" x="528" y="1056" width="48" height="48"/>
+  <object type="tower" x="528" y="816" width="48" height="48"/>
+  <object type="tower" x="528" y="1200" width="48" height="48"/>
+  <object type="tower" x="528" y="624" width="48" height="48"/>
+  <object type="tower" x="528" y="240" width="48" height="48"/>
+  <object type="tower" x="528" y="480" width="48" height="48"/>
+  <object type="tower" x="528" y="720" width="48" height="48"/>
+  <object type="tower" x="528" y="432" width="48" height="48"/>
+  <object type="tower" x="528" y="864" width="48" height="48"/>
+  <object type="tower" x="528" y="1104" width="48" height="48"/>
+  <object type="tower" x="528" y="1152" width="48" height="48"/>
+  <object type="tower" x="528" y="384" width="48" height="48"/>
+  <object type="tower" x="528" y="192" width="48" height="48"/>
+  <object type="tower" x="528" y="1008" width="48" height="48"/>
+  <object type="tower" x="528" y="960" width="48" height="48"/>
+  <object type="tower" x="528" y="768" width="48" height="48"/>
+  <object type="tower" x="528" y="912" width="48" height="48"/>
+  <object type="tower" x="528" y="672" width="48" height="48"/>
+  <object type="tower" x="528" y="144" width="48" height="48"/>
+  <object type="tower" x="528" y="288" width="48" height="48"/>
+  <object type="tower" x="528" y="576" width="48" height="48"/>
+  <object type="tower" x="528" y="528" width="48" height="48"/>
+  <object type="tower" x="528" y="1248" width="48" height="48"/>
+  <object type="tower" x="528" y="336" width="48" height="48"/>
  </objectgroup>
 </map>

@@ -97,4 +97,16 @@ export default class BattleUnit extends PIXI.Container {
 
   }
 
+  kill () {
+
+    App.tweens.add( this.scale ).to( { x: 1.1, y: 1.1 }, 200, Tweener.ease.quadOut )
+
+    App.tweens.add( this ).to( { alpha: 0 }, 200, Tweener.ease.quadOut ).then( () => {
+
+      this.parent.removeChild( this )
+
+    })
+
+  }
+
 }

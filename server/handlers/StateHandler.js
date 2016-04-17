@@ -68,6 +68,12 @@ class StateHandler {
 
   }
 
+  removeEntity ( entity ) {
+
+    delete this.entities[ entity.id ]
+
+  }
+
   hasUnitAt ( x, y ) {
     for ( let id in this.entities ) {
       if ( this.entities [ id ] instanceof Unit &&
@@ -190,6 +196,10 @@ class StateHandler {
       // console.log( this.obstacles[ i ] )
     }
 
+    if ( ! entity.isAvailableForBattle ) {
+      return
+    }
+
     for ( let id in this.entities ) {
       let otherEntity = this.entities[ id ]
 
@@ -208,11 +218,10 @@ class StateHandler {
         Math.pow( entity.position.y - otherEntity.position.y, 2 )
       )
 
-
-      if ( distance < 15 && otherEntity instanceof Unit && !otherEntity.isBattling ) {
+      if ( distance < 32 && otherEntity instanceof Unit && !otherEntity.isBattling ) {
 
         // create battle instance!
-        let battle = new Battle()
+        let battle = new Battle( this )
         battle.position = {
           x: ( entity.position.x + otherEntity.position.x ) / 2,
           y: ( entity.position.y + otherEntity.position.y ) / 2
@@ -222,7 +231,7 @@ class StateHandler {
 
         this.addEntity( battle )
 
-      } else if ( distance < 30 && otherEntity instanceof Battle ) {
+      } else if ( distance < 60 && otherEntity instanceof Battle ) {
 
         // join the battle!
         otherEntity.join( entity )
