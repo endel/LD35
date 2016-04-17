@@ -1,12 +1,12 @@
 import UnitAttributes from './UnitAttributes.js'
 
-const radius = 24
-
 export default class Unit extends PIXI.Container {
 
   constructor ( options, hasBorder = false ) {
 
     super()
+
+    this.side = options.side
 
     this.circle = new PIXI.Graphics()
 
@@ -15,12 +15,28 @@ export default class Unit extends PIXI.Container {
     }
 
     this.circle.beginFill( config.colors[ options.side ] );
-    this.circle.drawCircle( 0, 0, radius );
+    this.circle.drawCircle( 0, 0, config.circleRadius );
 
     this.addChild( this.circle )
 
     this.attributes = new UnitAttributes( options )
     this.addChild( this.attributes )
+
+  }
+
+  set isBattling ( value ) {
+
+    if ( value ) {
+
+      App.tweens.add( this ).to( { alpha: 0 }, 200, Tweener.ease.quadOut )
+      App.tweens.add( this.scale ).to( { x: 0.5, y: 0.5 }, 200, Tweener.ease.quadOut )
+
+    } else {
+
+      App.tweens.add( this ).to( { alpha: 1 }, 200, Tweener.ease.quadOut )
+      App.tweens.add( this.scale ).to( { x: 1, y: 1 }, 200, Tweener.ease.quadOut )
+
+    }
 
   }
 

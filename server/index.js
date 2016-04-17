@@ -18,7 +18,6 @@ var _ = require('dotenv').config()
 
 tmxParser.parseFile('./maps/default.tmx', function (err, map) {
   if (err) throw err;
-  console.log(map)
   gameServer.register('battle', BattleMapRoom, { map: map })
 })
 

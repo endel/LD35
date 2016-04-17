@@ -2,6 +2,7 @@ const EventEmitter = require('events').EventEmitter
 
 const Hero = require('../entities/Hero.js')
 const Unit = require('../entities/Unit.js')
+const Battle = require('../entities/Battle.js')
 const Tower = require('../entities/Tower.js')
 const UnitSpawnPoint = require('../entities/UnitSpawnPoint.js')
 
@@ -18,6 +19,7 @@ class StateHandler {
 
     this.entities = {}
     this.spawnPositions = {}
+    this.towers = []
 
     //
     // Parse tiled object layers
@@ -57,6 +59,10 @@ class StateHandler {
   }
 
   addEntity ( instance ) {
+
+    if ( instance.setup ) {
+      instance.setup( this )
+    }
 
     this.entities[ instance.id ] = instance
 
@@ -120,14 +126,13 @@ class StateHandler {
 
         let towerEntity = new Tower( obj )
 
+        this.towers.push( towerEntity )
+
         this.addEntity( towerEntity )
 
         break;
 
     }
-
-
-    console.log( type, object )
 
   }
 
@@ -138,9 +143,89 @@ class StateHandler {
     // update all entities
     for ( let id in this.entities ) {
 
-      if ( this.entities[ id ].update ) {
+      let entity = this.entities[ id ]
 
-        this.entities[ id ].update()
+      if ( entity.update ) {
+
+        entity.update( this )
+
+      }
+
+      //
+      // move entity if destiny pending
+      //
+      if ( entity.destiny && ! entity.isBattling ) {
+
+        let angle = Math.atan2( entity.destiny.y - entity.position.y, entity.destiny.x - entity.position.x )
+        let nextEntityPosition = {
+          x: entity.position.x + ( Math.cos( angle ) * entity.speed ) * this.clock.deltaTime,
+          y: entity.position.y + ( Math.sin( angle ) * entity.speed ) * this.clock.deltaTime
+        }
+
+        this.checkCollision( entity, angle, nextEntityPosition )
+        // let collidingWith =
+
+        this.entities[ id ].position.x = nextEntityPosition.x
+        this.entities[ id ].position.y = nextEntityPosition.y
+
+        let distance = Math.sqrt(
+          Math.pow( entity.position.x - entity.destiny.x, 2 ) +
+          Math.pow( entity.position.y - entity.destiny.y, 2 )
+        )
+
+        // reached destiny, remove it
+        if ( distance < 5 ) { entity.destiny = null }
+
+      }
+
+    }
+
+  }
+
+  checkCollision ( entity, angle, position ) {
+
+    // TODO : use quadtree / steering behaviour
+    for ( let i = 0 ; i < this.obstacles.length; i++ ) {
+      // if ( position.x )
+      // console.log( this.obstacles[ i ] )
+    }
+
+    for ( let id in this.entities ) {
+      let otherEntity = this.entities[ id ]
+
+      //
+      // prevent collision with entities from the same side
+      //
+      if (
+        otherEntity.side === entity.side ||
+        ( !( otherEntity instanceof Unit ) && !( otherEntity instanceof Battle))
+      ) {
+        continue;
+      }
+
+      let distance = Math.sqrt(
+        Math.pow( entity.position.x - otherEntity.position.x, 2 ) +
+        Math.pow( entity.position.y - otherEntity.position.y, 2 )
+      )
+
+
+      if ( distance < 15 && otherEntity instanceof Unit && !otherEntity.isBattling ) {
+
+        // create battle instance!
+        let battle = new Battle()
+        battle.position = {
+          x: ( entity.position.x + otherEntity.position.x ) / 2,
+          y: ( entity.position.y + otherEntity.position.y ) / 2
+        }
+        battle.join( entity )
+        battle.join( otherEntity )
+
+        this.addEntity( battle )
+
+      } else if ( distance < 30 && otherEntity instanceof Battle ) {
+
+        // join the battle!
+        otherEntity.join( entity )
 
       }
 
@@ -152,8 +237,7 @@ class StateHandler {
 
     return {
       map: this.map,
-      obstacles: this.obstacles,
-      entities: this.entities,
+      entities: this.entities
     }
 
   }

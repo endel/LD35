@@ -18,7 +18,10 @@ class App {
       // resolution: window.devicePixelRatio,
       antialias: true
     })
+
     this.renderer.backgroundColor = 0x8eb727
+    // this.renderer.backgroundColor = 0x306404
+
     document.body.appendChild(this.renderer.view)
 
     this.sceneManager = new SceneManager(SCALE_RATIO)

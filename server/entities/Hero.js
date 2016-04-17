@@ -9,6 +9,8 @@ class Hero extends Unit {
     this.type = 'hero'
     this.name = options.name
 
+    this.speed = 0.15
+
   }
 
 }

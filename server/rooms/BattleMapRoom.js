@@ -43,6 +43,7 @@ class BattleMapRoom extends Room {
   onMessage (client, data) {
     let key = data[0]
       , value = data[1]
+
       , hero = this.heroes.get( client )
 
     if (!hero) {
@@ -50,9 +51,9 @@ class BattleMapRoom extends Room {
       return
     }
 
-    if (key == 'pos') {
+    if (key == 'move') {
 
-      this.state.move(hero, value, true)
+      hero.moveTo ( value )
 
     }
 

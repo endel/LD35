@@ -3,14 +3,14 @@
  <objectgroup color="#ff0000" name="towers">
   <object type="tower" x="720" y="1296" width="48" height="48">
    <properties>
-    <property name="attack" value="0"/>
+    <property name="attack" value="5"/>
     <property name="defense" value="30"/>
     <property name="side" value="0"/>
    </properties>
   </object>
   <object type="tower" x="720" y="96" width="48" height="48">
    <properties>
-    <property name="attack" value="0"/>
+    <property name="attack" value="5"/>
     <property name="defense" value="30"/>
     <property name="side" value="1"/>
    </properties>

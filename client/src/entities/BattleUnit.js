@@ -87,8 +87,8 @@ export default class BattleUnit extends PIXI.Container {
         this.teams[ unit.side ] = { attack: 0, defense: 0 }
       }
 
-      this.teams[ unit.side ].defense += unit.defense
-      this.teams[ unit.side ].attack += unit.attack
+      this.teams[ unit.side ].defense += unit.attributes.defense
+      this.teams[ unit.side ].attack += unit.attributes.attack
     } )
 
     let battleBetweenSides = Object.keys(this.teams)

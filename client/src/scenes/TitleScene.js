@@ -6,6 +6,7 @@ import TowerUnit from '../entities/TowerUnit.js'
 import BattleUnit from '../entities/BattleUnit.js'
 
 import ViewportFollow from '../behaviours/ViewportFollow.js'
+import SmoothMovement from '../behaviours/SmoothMovement.js'
 
 const MAPSIZE = 1440
 
@@ -20,6 +21,8 @@ export default class TitleScene extends PIXI.Container {
     this.addChild( this.grass )
 
     this.scenery = new PIXI.Container()
+
+    this.entities = {}
 
     this.addChild( this.scenery )
 
@@ -38,7 +41,7 @@ export default class TitleScene extends PIXI.Container {
     this.room.on( 'update', this.onRoomUpdate.bind(this) )
     this.room.on( 'error', ( err ) => console.error( arguments ) )
 
-    this.on('dispose', this.onDispose.bind(this))
+    this.on( 'dispose', this.onDispose.bind(this) )
 
   }
 
@@ -49,8 +52,6 @@ export default class TitleScene extends PIXI.Container {
 
     } else {
 
-      console.log("Patches:", patches)
-
       for ( let i=0; i < patches.length; i++ ) {
 
         let patch = patches [ i ]
@@ -59,7 +60,49 @@ export default class TitleScene extends PIXI.Container {
 
         if ( patch.op === "add" && entityId ) {
 
-          this.createEntity ( entityId, patch.value )
+          if ( this.entities[ entityId ] ) {
+            // add attribute to entity
+
+            // add units to battle unit
+            if ( patch.path.indexOf("/units") > 0 ) {
+
+              this.entities[ entityId ].updateUnits(
+                Object.keys( state.entities[ entityId ].units ).map( id => this.entities[ id ] )
+              )
+
+            }
+
+          } else {
+
+            // create new entity
+            this.createEntity ( entityId, patch.value )
+          }
+
+        } else if ( patch.op === "replace" && this.entities[ entityId ] ) {
+
+          // update existing entity
+
+          let [ _, attr1, __, attr2 ] = patch.path.match(/\/entities\/[a-zA-Z0-9_-]+\/([a-zA-Z]+)(\/([a-zA-Z]+))?/)
+
+          if ( ! this.entities[ entityId ].incoming ) {
+            this.entities[ entityId ].incoming = {}
+          }
+
+          // create deep nested object
+          if ( attr2 && ! this.entities[ entityId ].incoming[ attr1 ] ) {
+            this.entities[ entityId ].incoming[ attr1 ] = {}
+          }
+
+          // TODO: improve me, this is the ugliest code I've ever seen
+          if ( attr2 ) {
+            this.entities[ entityId ].incoming[ attr1 ][ attr2 ] = patch.value
+
+          } else {
+
+            this.entities[ entityId ][ attr1 ] = patch.value
+
+            // this.entities[ entityId ].incoming[ attr1 ] = patch.value
+          }
 
         }
 
@@ -135,21 +178,44 @@ export default class TitleScene extends PIXI.Container {
 
         break;
 
+      case "battle":
+        let battlingEntities = Object.keys(data.units).map( entityId => this.entities[ entityId ] )
+        entity = new BattleUnit( battlingEntities )
+
+    // let battleUnit = new BattleUnit([
+    //     { side: 0, attack: 1, defense: 1 },
+    //     { side: 0, attack: 1, defense: 2 },
+    //     { side: 2, attack: 2, defense: 1 },
+    //     { side: 2, attack: 1, defense: 3 },
+    // ])
+    // battleUnit.x = 300
+    // battleUnit.y = MAPSIZE
+    // this.addChild( battleUnit )
+
+        break;
+
       case "spawn-point":
         return false
 
         break;
     }
 
+    if ( !entity ) {
+      console.warn( "couldn't create entity. ", data )
+      return
+    }
+
     this.addChild( entity )
+    this.entities[ entityId ] = entity
 
     // entity entering animation
     App.tweens.add( entity ).from({ opacity: 0 }, 600, Tweener.ease.quadOut)
     App.tweens.add( entity.scale ).from({ x: 0.4, y: 0.4 }, 500, Tweener.ease.bounceOut)
 
-    if ( data.data.x || data.data.y ) {
-      entity.x = data.data.x
-      entity.y = data.data.y
+    if ( data.position.x || data.position.y ) {
+      entity.addBehaviour(new SmoothMovement)
+      entity.x = data.position.x
+      entity.y = data.position.y
     }
 
     return entity

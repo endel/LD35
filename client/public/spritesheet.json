@@ -37,6 +37,14 @@
 			"spriteSourceSize": {"x":0,"y":0,"w":55,"h":48},
 			"sourceSize": {"w":55,"h":48}
 		},
+		"move-to.png":
+		{
+			"frame": {"x":1,"y":126,"w":40,"h":52},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":40,"h":52},
+			"sourceSize": {"w":40,"h":52}
+		},
 		"grass.png":
 		{
 			"frame": {"x":168,"y":64,"w":48,"h":48},
@@ -47,7 +55,7 @@
 		},
 		"way.png":
 		{
-			"frame": {"x":1,"y":126,"w":48,"h":48},
+			"frame": {"x":43,"y":126,"w":48,"h":48},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
@@ -55,7 +63,7 @@
 		},
 		"sword-shield.png":
 		{
-			"frame": {"x":51,"y":126,"w":30,"h":15},
+			"frame": {"x":93,"y":126,"w":30,"h":15},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {"x":0,"y":0,"w":30,"h":15},
