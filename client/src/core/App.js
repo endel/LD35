@@ -3,7 +3,6 @@ import { createComponentSystem } from 'behaviour.js'
 import SceneManager from './SceneManager'
 
 import Clock from 'clock-timer.js'
-window.clock = new Clock();
 
 import Tweener from 'tweener'
 
@@ -12,6 +11,8 @@ window.SCALE_RATIO = 1
 class App {
 
   constructor () {
+
+    this.clock = new Clock();
     this.tweens = new Tweener();
 
     this.renderer = new PIXI.WebGLRenderer(window.innerWidth, window.innerHeight, {
@@ -39,9 +40,9 @@ class App {
 
   update () {
     window.requestAnimationFrame( this.update.bind( this) )
-    clock.tick()
+    this.clock.tick()
 
-    this.tweens.update(clock.deltaTime)
+    this.tweens.update(this.clock.deltaTime)
     this.componentSystem.update()
 
     this.renderer.render(this.sceneManager)

@@ -18,7 +18,7 @@ export default class Resources {
     this.numLoads++
     if (this.numLoads === this.filesToLoad) {
       document.body.className = "loaded"
-      clock.setTimeout(() => {
+      App.clock.setTimeout(() => {
         document.querySelector('.loading').style.display = 'none'
       }, 500)
       this.onLoadComplete()

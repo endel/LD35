@@ -13,6 +13,7 @@ class Tower extends Unit {
     this.type = 'tower'
     this.alive = true
 
+    this.isSpawnAllowed = this.data.properties.spawn != 0
     this.isSpawning = true
 
     this.lastSpawnTime = 0
@@ -26,12 +27,22 @@ class Tower extends Unit {
 
   setup ( state ) {
 
-    state.clock.setInterval( this.toggleSpawner.bind(this, state) , this.spawnWaveInterval )
-    this.toggleSpawner( state )
+    // spawn feature might be disabled on this tower
+    if ( this.isSpawnAllowed )  {
+
+      state.clock.setInterval( this.toggleSpawner.bind(this, state) , this.spawnWaveInterval )
+      this.toggleSpawner( state )
+
+    }
 
   }
 
   toggleSpawner ( state ) {
+
+    // don't spawn if tower is not alive
+    if ( ! this.alive ) {
+      return
+    }
 
     spawnInterval.set( this, state.clock.setInterval( this.spawn.bind(this, state), this.spawnInterval ) )
 
@@ -47,6 +58,7 @@ class Tower extends Unit {
       x: this.position.x,
       y: this.position.y,
       properties: {
+        isCreep: true,
         side: parseInt( this.side ),
         attack: this.lvl - Math.round( Math.random() ) + Math.round( Math.random() ),
         defense: this.lvl - Math.round( Math.random() ) + Math.round( Math.random() ),
@@ -55,13 +67,16 @@ class Tower extends Unit {
 
     // creep destiny is always the opposite tower
     let enemyTowers = state.towers.filter( tower => tower.side !== this.side )
-    let nextEnemyTower = enemyTowers.filter( tower => tower.alive && tower.position.x === this.position.x )
+    let nextEnemyTower = enemyTowers.filter( tower => tower.position.x === this.position.x )
 
-    if ( nextEnemyTower.length > 0 ) {
-      creep.destiny = nextEnemyTower[0].position
-    } else {
-      creep.destiny = enemyTowers[0].position
-    }
+    creep.destiny = nextEnemyTower[0].position
+
+
+    // if ( nextEnemyTower.length > 0 ) {
+    //   creep.destiny = nextEnemyTower[0].position
+    // } else {
+    //   creep.destiny = enemyTowers[0].position
+    // }
 
 
     state.addEntity( creep )

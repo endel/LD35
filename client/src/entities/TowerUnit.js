@@ -25,6 +25,8 @@ export default class TowerUnit extends PIXI.Container {
 
   kill () {
 
+    App.sound.play('tower-explode')
+
     App.tweens.add( this.scale ).to( { x: 0.3, y: 0.3 }, 800, Tweener.ease.quadOut )
 
     App.tweens.add( this ).to( { alpha: 0 }, 800, Tweener.ease.quadOut ).then( () => {

@@ -14,6 +14,7 @@ class Unit {
     this.destiny = null
 
     this.isBattling = false
+    this.isCreep = data.properties.isCreep || false
 
     this.lvl = data.lvl || 1
     this.pointsToDistribute = 0
@@ -34,6 +35,28 @@ class Unit {
 
   }
 
+  update ( state ) {
+
+    //
+    // TODO: improve me
+    //
+    // the tower on current unit's lane was destroyed,
+    // find another destiny to follow, which is main opponent's tower
+    //
+
+    if ( this.isCreep && !this.destiny ) {
+
+      let mainEnemyTower = state.towers.filter( tower => tower.side !== this.side && !tower.isSpawnAllowed )[ 0 ]
+
+      this.destiny = {
+        x: mainEnemyTower.position.x,
+        y: mainEnemyTower.position.y
+      }
+
+    }
+
+  }
+
   incrementExp ( exp ) {
 
     this.exp += exp
@@ -44,7 +67,7 @@ class Unit {
       this.pointsToDistribute ++
 
       this.exp = this.exp - this.expMax
-      this.expMax += this.lvl
+      this.expMax += (this.lvl / 2)
 
     }
 
@@ -53,8 +76,12 @@ class Unit {
   get isAvailableForBattle () {
 
     // units can join in battle again only after 1 sec abandoning
-    return (lastBattleAbandon.get( this ) || 0) + config.abandonTimeout < Date.now()
+    return this.lastBattleAbandon + config.abandonImmunityTime < Date.now()
 
+  }
+
+  get lastBattleAbandon () {
+    return lastBattleAbandon.get( this ) || 0
   }
 
 
@@ -62,9 +89,11 @@ class Unit {
 
     this.destiny = point
 
-    if ( this.isBattling ) {
+    if ( this.isBattling && this.lastBattleAbandon + config.abandonCooldown < Date.now() ) {
+
       battleInstances.get( this ).leave( this, true )
       lastBattleAbandon.set( this, Date.now() )
+
     }
 
   }

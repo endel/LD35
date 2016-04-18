@@ -1,6 +1,8 @@
 import Unit from './Unit.js'
 import LevelUp from '../effects/LevelUp.js'
 
+import RespawnCountdown from '../behaviours/RespawnCountdown.js'
+
 import { getClientId } from '../core/Network.js'
 
 export default class HeroUnit extends Unit {
@@ -40,6 +42,12 @@ export default class HeroUnit extends Unit {
 
   }
 
+  get lvl () {
+
+    return this._lvl
+
+  }
+
   levelUp () {
 
     if ( this.isCurrentPlayer ) {
@@ -57,7 +65,11 @@ export default class HeroUnit extends Unit {
   onRemovedFromContainer ( container ) {
 
     this.getEntity().detachAll()
-    container.getEntity().detachAll()
+    container.parent.getEntity().detachAll()
+
+    if ( this.isCurrentPlayer ) {
+      container.parent.addBehaviour( new RespawnCountdown, this )
+    }
 
   }
 

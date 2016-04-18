@@ -8,8 +8,6 @@ import BattleUnit from '../entities/BattleUnit.js'
 import ViewportFollow from '../behaviours/ViewportFollow.js'
 import SmoothMovement from '../behaviours/SmoothMovement.js'
 
-const MAPSIZE = 1440
-
 export default class TitleScene extends PIXI.Container {
 
   constructor () {
@@ -17,14 +15,20 @@ export default class TitleScene extends PIXI.Container {
     super()
 
     // grass background
-    this.grass = new PIXI.extras.TilingSprite(PIXI.Texture.fromImage('grass.png'), MAPSIZE, MAPSIZE)
+    this.grass = new PIXI.extras.TilingSprite(PIXI.Texture.fromImage('grass.png'), 100, 100)
     this.addChild( this.grass )
 
     this.scenery = new PIXI.Container()
+    this.addChild( this.scenery )
+
+    this.entityLayer = new PIXI.Container()
+    this.addChild( this.entityLayer )
+
+    this.topLayer = new PIXI.Container()
+    this.addChild( this.topLayer )
 
     this.entities = {}
-
-    this.addChild( this.scenery )
+    this.respawnCount = 0
 
     this.room = join( 'battle', { name: "Jake Badlands" } )
 
@@ -118,6 +122,9 @@ export default class TitleScene extends PIXI.Container {
 
   setupMap ( state ) {
 
+    this.grass.width = state.size.width
+    this.grass.height = state.size.height
+
     //
     // add scenery elements
     //
@@ -167,7 +174,13 @@ export default class TitleScene extends PIXI.Container {
         entity = new HeroUnit( data )
 
         if ( entityId === getClientId() ) {
-          this.addBehaviour (new ViewportFollow, entity)
+
+          if ( this.respawnCount > 0 ) {
+            App.sound.play('respawn')
+          }
+
+          this.respawnCount++
+          this.addBehaviour( new ViewportFollow, entity )
         }
 
         break;
@@ -211,7 +224,7 @@ export default class TitleScene extends PIXI.Container {
       return
     }
 
-    this.addChild( entity )
+    this.entityLayer.addChild( entity )
     this.entities[ entityId ] = entity
 
     // entity entering animation

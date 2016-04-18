@@ -21,6 +21,11 @@ class StateHandler {
     this.spawnPositions = {}
     this.towers = []
 
+    this.size = {
+      width: map.width * map.tileWidth,
+      height: map.height * map.tileHeight
+    }
+
     //
     // Parse tiled object layers
     //
@@ -42,7 +47,7 @@ class StateHandler {
 
     let hero = new Hero({
       id: data.id,
-      name: `Player ${ playerId }`, // data.name
+      name: data.name, // data.name
       x: this.spawnPositions[ data.side ].x,
       y: this.spawnPositions[ data.side ].y,
       properties: {
@@ -257,6 +262,7 @@ class StateHandler {
   toJSON () {
 
     return {
+      size: this.size,
       map: this.map,
       entities: this.entities
     }

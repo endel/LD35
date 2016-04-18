@@ -113,11 +113,23 @@ class Battle {
 
     this.percentage = ( side1Percent + side2Percent ) / 2
 
-    if ( this.hp[ side1 ] < 0 || this.hp[ side2 ] < 0 ) {
-      let winners = ( this.hp[ side1 ] < 0 ) ? unitsSide2 : unitsSide1
-      let loosers = ( this.hp[ side1 ] < 0 ) ? unitsSide1 : unitsSide2
+    let winners = []
+    let loosers = []
 
-      let expToIncrement = this.getUnitsAttribute ( loosers, 'lvl' )
+    if ( this.hp[ side1 ] <= 0 && this.hp[ side2 ] <= 0 ) {
+
+      loosers = [...unitsSide1, ...unitsSide2]
+
+    } else if ( this.hp[ side1 ] <= 0 || this.hp[ side2 ] <= 0 ) {
+
+      winners = ( this.hp[ side1 ] <= 0 ) ? unitsSide2 : unitsSide1
+      loosers = ( this.hp[ side1 ] <= 0 ) ? unitsSide1 : unitsSide2
+
+    }
+
+    if ( winners.length > 0 || loosers.length > 0 ) {
+
+      let expToIncrement = this.getUnitsAttribute ( loosers, 'lvl' ) / winners.length
 
       loosers.map( unit => {
         state.removeEntity ( unit )
@@ -131,10 +143,14 @@ class Battle {
         }
 
       })
+
       winners.map( unit => {
         this.leave( unit )
         unit.incrementExp( expToIncrement )
       } )
+
+      this.destroy()
+
     }
 
   }
