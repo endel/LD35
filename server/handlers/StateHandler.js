@@ -243,6 +243,17 @@ class StateHandler {
 
   }
 
+  respawn ( hero ) {
+
+    this.clock.setTimeout(() => {
+      hero.destiny = null
+      hero.position.x = this.spawnPositions[ hero.side ].x
+      hero.position.y = this.spawnPositions[ hero.side ].y
+      this.addEntity ( hero )
+    }, hero.lvl * 1000 )
+
+  }
+
   toJSON () {
 
     return {

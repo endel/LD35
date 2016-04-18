@@ -15,7 +15,7 @@ class Unit {
 
     this.isBattling = false
 
-    this.lvl = 1
+    this.lvl = data.lvl || 1
     this.pointsToDistribute = 0
 
     this.exp = 0

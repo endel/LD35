@@ -4,5 +4,7 @@ module.exports = {
   spawnPerWave: 3,              // number of creeps to spawn per wave
 
   attackInterval: 600,          // time to simulate each attack step
-  abandonTimeout: 600,          // units can't battle again for this time after leaving a battle
+  abandonTimeout: 800,          // units can't battle again for this time after leaving a battle
+
+  neutralSpawnRate: 20000,      // interval to spawn neutral units
 }

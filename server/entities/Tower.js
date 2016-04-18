@@ -11,6 +11,7 @@ class Tower extends Unit {
     super ( options )
 
     this.type = 'tower'
+    this.alive = true
 
     this.isSpawning = true
 
@@ -42,19 +43,26 @@ class Tower extends Unit {
   spawn ( state ) {
 
     let creep = new Unit({
+      lvl: this.lvl,
       x: this.position.x,
       y: this.position.y,
       properties: {
         side: parseInt( this.side ),
-        attack: 1 - Math.round( Math.random() ) + Math.round( Math.random() ),
-        defense: 1 - Math.round( Math.random() ) + Math.round( Math.random() ),
+        attack: this.lvl - Math.round( Math.random() ) + Math.round( Math.random() ),
+        defense: this.lvl - Math.round( Math.random() ) + Math.round( Math.random() ),
       }
     })
 
     // creep destiny is always the opposite tower
-    creep.destiny = state.towers.filter(tower => {
-      return tower.side !== this.side && tower.position.x === this.position.x
-    })[0].position
+    let enemyTowers = state.towers.filter( tower => tower.side !== this.side )
+    let nextEnemyTower = enemyTowers.filter( tower => tower.alive && tower.position.x === this.position.x )
+
+    if ( nextEnemyTower.length > 0 ) {
+      creep.destiny = nextEnemyTower[0].position
+    } else {
+      creep.destiny = enemyTowers[0].position
+    }
+
 
     state.addEntity( creep )
 

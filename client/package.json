@@ -17,11 +17,13 @@
     "behaviour.js": "^0.2.4",
     "clock-timer.js": "^1.1.0",
     "colyseus.js": "^0.2.6",
+    "howler": "^1.1.29",
     "lerp": "^1.0.3",
     "pixi.js": "~3.0.11",
     "tweener": "^0.1.28"
   },
   "devDependencies": {
+    "audiosprite": "^0.6.0",
     "babel-core": "^6.7.2",
     "babel-loader": "^6.2.4",
     "babel-plugin-transform-class-properties": "^6.6.0",

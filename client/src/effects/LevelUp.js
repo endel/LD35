@@ -58,6 +58,8 @@ export default class LevelUp extends PIXI.Container {
 
     send(['up', attribute])
 
+    App.sound.play('attack')
+
     App.tweens.add( this.scale ).to({ x: 0.3, y: 0.3 }, 200, Tweener.ease.quadOut)
     App.tweens.add( this ).to({ alpha: 0 }, 250, Tweener.ease.quadOut).then( () => {
       this.parent.removeChild ( this )

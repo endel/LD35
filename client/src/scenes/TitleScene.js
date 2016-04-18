@@ -26,22 +26,15 @@ export default class TitleScene extends PIXI.Container {
 
     this.addChild( this.scenery )
 
-    // let battleUnit = new BattleUnit([
-    //     { side: 0, attack: 1, defense: 1 },
-    //     { side: 0, attack: 1, defense: 2 },
-    //     { side: 2, attack: 2, defense: 1 },
-    //     { side: 2, attack: 1, defense: 3 },
-    // ])
-    // battleUnit.x = 300
-    // battleUnit.y = MAPSIZE
-    // this.addChild( battleUnit )
-
     this.room = join( 'battle', { name: "Jake Badlands" } )
 
     this.room.on( 'update', this.onRoomUpdate.bind(this) )
     this.room.on( 'error', ( err ) => console.error( arguments ) )
 
     this.on( 'dispose', this.onDispose.bind(this) )
+
+    // Play theme song
+    App.sound.play('theme-song')
 
   }
 
@@ -174,7 +167,6 @@ export default class TitleScene extends PIXI.Container {
         entity = new HeroUnit( data )
 
         if ( entityId === getClientId() ) {
-          entity.isCurrentPlayer = true
           this.addBehaviour (new ViewportFollow, entity)
         }
 

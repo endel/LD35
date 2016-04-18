@@ -1,13 +1,15 @@
 import Unit from './Unit.js'
 import LevelUp from '../effects/LevelUp.js'
 
+import { getClientId } from '../core/Network.js'
+
 export default class HeroUnit extends Unit {
 
   constructor ( options ) {
 
     super( options, true )
 
-    this.isCurrentPlayer = false
+    this.isCurrentPlayer = (getClientId() === options.id)
 
     this._lvl = 1
 
@@ -21,7 +23,13 @@ export default class HeroUnit extends Unit {
     this.name.anchor.set( 0.5 )
     this.name.y = this.circle.y + this.circle.height / 2
 
+    // show points to distribute when unit is created
+    let i = options.pointsToDistribute
+    while ( i-- ) { this.levelUp() }
+
     this.addChild( this.name )
+
+    this.on('removed', this.onRemovedFromContainer.bind( this ) )
 
   }
 
@@ -34,8 +42,22 @@ export default class HeroUnit extends Unit {
 
   levelUp () {
 
+    if ( this.isCurrentPlayer ) {
+
+      // Play theme song
+      App.sound.play('levelup')
+
+    }
+
     let lvlUp = new LevelUp( this.side, this.isCurrentPlayer )
     this.addChild( lvlUp )
+
+  }
+
+  onRemovedFromContainer ( container ) {
+
+    this.getEntity().detachAll()
+    container.getEntity().detachAll()
 
   }
 

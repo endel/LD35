@@ -2,6 +2,7 @@ var path = require('path')
 var webpack = require('webpack')
 
 var SpritesheetPlugin = require('./webpack/SpritesheetPlugin.js')
+var AudiospritePlugin = require('./webpack/AudiospritePlugin.js')
 
 module.exports = {
   entry: './src/main.js',
@@ -50,6 +51,25 @@ module.exports = {
       path: "public",
       powerOfTwo: true,
       padding: 1
+    }),
+
+    new AudiospritePlugin([
+      'sounds/attack.wav',
+      'sounds/end-battle.wav',
+      'sounds/levelup.wav',
+      'sounds/lose-match.wav',
+      'sounds/respawn.wav',
+      'sounds/tower-explode.wav',
+      'sounds/upgrade.wav',
+      'sounds/win-match.wav',
+      'sounds/theme-song.wav',
+    ], {
+      output: 'public/audio',
+      format: 'howler',
+      path: '',
+      loop: [
+        'theme-song',
+      ]
     })
   ]
 

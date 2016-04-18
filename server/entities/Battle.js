@@ -1,6 +1,8 @@
 const uniqid = require('uniqid')
 const config = require('../config.js')
+
 const Hero = require('./Hero.js')
+const Tower = require('./Tower.js')
 
 var _units = new WeakMap()
 var interval = new WeakMap()
@@ -117,7 +119,18 @@ class Battle {
 
       let expToIncrement = this.getUnitsAttribute ( loosers, 'lvl' )
 
-      loosers.map( unit => state.removeEntity ( unit ))
+      loosers.map( unit => {
+        state.removeEntity ( unit )
+
+        if ( unit instanceof Tower ) {
+          unit.alive = false
+        }
+
+        if ( unit instanceof Hero ) {
+          state.respawn ( unit )
+        }
+
+      })
       winners.map( unit => {
         this.leave( unit )
         unit.incrementExp( expToIncrement )

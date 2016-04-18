@@ -52,21 +52,23 @@ export default class BattleUnit extends PIXI.Container {
 
     let battleBetweenSides = Object.keys(this.teams)
 
-    this.circlePlayer.beginFill( config.colors[ battleBetweenSides[0] ] );
-    this.circlePlayer.drawCircle( 0, 0, radius );
-
-    this.circleEnemy.beginFill( config.colors[ battleBetweenSides[1] ] );
+    this.circleEnemy.beginFill( config.colors[ battleBetweenSides[0] ] );
     this.circleEnemy.drawCircle( 0, 0, radius );
 
-    this.setPercentage( 0.5 )
+    this.circlePlayer.beginFill( config.colors[ battleBetweenSides[1] ] );
+    this.circlePlayer.drawCircle( 0, 0, radius );
+
+    this.percentage = 0.5
 
   }
 
-  setPercentage ( percentage ) {
+  set percentage ( percentage ) {
+
+    App.sound.play('attack')
 
     App.tweens.add( this.scale ).from( { x: 1.1, y: 1.1 }, 200, Tweener.ease.quadOut )
 
-    this.percentage = percentage
+    // this.percentage = percentage
 
     this.circlePlayerMask.scale.y = percentage
     this.circlePlayerMask.y = -radius * ( 1 - percentage )
@@ -94,12 +96,14 @@ export default class BattleUnit extends PIXI.Container {
     } )
 
     let battleBetweenSides = Object.keys(this.teams)
-    this.playerAttributes.updateAttributes( this.teams[ battleBetweenSides[0] ] )
-    this.enemyAttributes.updateAttributes( this.teams[ battleBetweenSides[1] ] )
+    this.enemyAttributes.updateAttributes( this.teams[ battleBetweenSides[0] ] )
+    this.playerAttributes.updateAttributes( this.teams[ battleBetweenSides[1] ] )
 
   }
 
   kill () {
+
+    App.sound.play('end-battle')
 
     App.tweens.add( this.scale ).to( { x: 1.1, y: 1.1 }, 200, Tweener.ease.quadOut )
 

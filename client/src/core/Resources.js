@@ -4,10 +4,9 @@ export default class Resources {
     this.onLoadComplete = onLoadComplete
 
     this.numLoads = 0
-    this.filesToLoad = 1
+    this.filesToLoad = 2
 
-    // sounds.on('load', this.incrementLoader.bind(this))
-    // music.on('load', this.incrementLoader.bind(this))
+    App.sound.on('load', this.incrementLoader.bind(this))
 
     this.loader = new PIXI.loaders.Loader();
     this.loader.add('spritesheet', "spritesheet.json")

@@ -3,6 +3,8 @@
 const Unit = require('./Unit.js')
 const uniqid = require('uniqid')
 
+const config = require('../config.js')
+
 const randomFactor = 2
 
 class UnitSpawnPoint { // extends EventEmitter
@@ -24,7 +26,7 @@ class UnitSpawnPoint { // extends EventEmitter
 
     // One minute
     // this.spawnInterval = 1000 * 60
-    this.spawnInterval = 1000
+    this.spawnInterval = config.neutralSpawnRate
 
   }
 

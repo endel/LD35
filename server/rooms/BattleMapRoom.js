@@ -39,9 +39,6 @@ class BattleMapRoom extends Room {
 
     this.heroes.set( client, hero )
 
-    // immediately increment player to lvl 1, allowing user to distribute its first attribute
-    this.clock.setTimeout(() => { hero.lvl ++ }, 1000)
-
     console.log(client.id, 'joined', options)
   }
 
@@ -78,12 +75,16 @@ class BattleMapRoom extends Room {
   }
 
   tick () {
+
     this.state.update()
+
   }
 
   dispose () {
+
     clearInterval(this.tickInterval)
     console.log("dispose BattleMapRoom", this.roomId)
+
   }
 
 }
