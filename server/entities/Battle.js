@@ -64,14 +64,20 @@ class Battle {
       this.hp[ unit.side ] -= unit.defense
     }
 
-    if ( arr.length == 1 ) {
+    // skip if there is no items left
+    if ( arr.length === 0 ) {
+      return
+    }
 
-      // just one left, leave this one
-      // and then destroy battle unit
+    let side1 = arr[ 0 ].side
 
-      this.leave( arr[0], false )
+    if ( arr.filter(unit => unit.side !== side1).length == 0 ) {
 
-      _state.get( this ).removeEntity ( this )
+      // other side left
+      // leave remaining items and then destroy battle unit
+
+      arr.map(unit => this.leave( unit, false ))
+      this.destroy()
 
     }
 
@@ -82,18 +88,11 @@ class Battle {
 
     let units = _units.get( this )
 
-    if ( units.length <= 1) {
-      console.log("attack: invalid battle...")
-      return
-    }
+    let side1 = units[ 0 ].side
+    let unitsSide1 = units.filter(unit => unit.side === side1)
 
-    let unitsSide1 = units.filter(unit => unit.side === units[ 0 ].side)
-    let side1 = unitsSide1[ 0 ].side
-
-    let unitsSide2 = units.filter(unit => unit.side !== units[ 0 ].side)
+    let unitsSide2 = units.filter(unit => unit.side !== side1)
     let side2 = unitsSide2[ 0 ].side
-
-    console.log("side1: ", side1, "side2: ", side2 )
 
     //
     // TODO: process "first-strike"

@@ -83,6 +83,8 @@ export default class BattleUnit extends PIXI.Container {
     this.teams = {}
 
     units.map( unit => {
+      if ( !unit ) { return }
+
       if ( !this.teams[ unit.side ] ) {
         this.teams[ unit.side ] = { attack: 0, defense: 0 }
       }

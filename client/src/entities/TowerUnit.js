@@ -15,7 +15,7 @@ export default class TowerUnit extends PIXI.Container {
     this.tower.y = 20
     this.addChild( this.tower )
 
-    this.unit = new Unit(options)
+    this.unit = new Unit( options )
     this.unit.x = this.tower.width / 4
     this.unit.y = 24
     this.addChild( this.unit )

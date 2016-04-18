@@ -25,8 +25,8 @@ export default class UnitAttributes extends PIXI.Container {
 
   updateAttributes ( attributes ) {
 
-    this.attack = attributes.attack || 0
-    this.defense = attributes.defense || 0
+    this.attack = parseInt(attributes.attack) || 0
+    this.defense = parseInt(attributes.defense) || 0
 
     this.text.text = `${this.attack} / ${this.defense}`
 
