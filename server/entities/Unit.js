@@ -15,6 +15,12 @@ class Unit {
 
     this.isBattling = false
 
+    this.lvl = 1
+    this.pointsToDistribute = 0
+
+    this.exp = 0
+    this.expMax = 1
+
     this.type = 'unit'
 
     this.id = data.id || uniqid()
@@ -25,6 +31,22 @@ class Unit {
     this.defense = data.properties.defense || 1
 
     this.side = parseInt( data.properties.side )
+
+  }
+
+  incrementExp ( exp ) {
+
+    this.exp += exp
+
+    if ( this.exp >= this.expMax ) {
+
+      this.lvl ++
+      this.pointsToDistribute ++
+
+      this.exp = this.exp - this.expMax
+      this.expMax += this.lvl
+
+    }
 
   }
 

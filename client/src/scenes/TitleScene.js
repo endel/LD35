@@ -138,6 +138,7 @@ export default class TitleScene extends PIXI.Container {
           break;
         case "way":
           sprite = PIXI.Sprite.fromImage('way.png')
+          sprite.anchor.set( 0.5 )
           break;
       }
 
@@ -173,6 +174,7 @@ export default class TitleScene extends PIXI.Container {
         entity = new HeroUnit( data )
 
         if ( entityId === getClientId() ) {
+          entity.isCurrentPlayer = true
           this.addBehaviour (new ViewportFollow, entity)
         }
 

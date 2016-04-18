@@ -61,9 +61,25 @@
 			"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
 			"sourceSize": {"w":48,"h":48}
 		},
+		"sword.png":
+		{
+			"frame": {"x":93,"y":126,"w":30,"h":30},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":30,"h":30},
+			"sourceSize": {"w":30,"h":30}
+		},
+		"shield.png":
+		{
+			"frame": {"x":125,"y":126,"w":25,"h":30},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":25,"h":30},
+			"sourceSize": {"w":25,"h":30}
+		},
 		"sword-shield.png":
 		{
-			"frame": {"x":93,"y":126,"w":30,"h":15},
+			"frame": {"x":152,"y":126,"w":30,"h":15},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {"x":0,"y":0,"w":30,"h":15},

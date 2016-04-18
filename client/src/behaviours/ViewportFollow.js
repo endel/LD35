@@ -15,6 +15,8 @@ export default class ViewportFollow extends Behaviour {
     this.object.on( 'click', this.onClick.bind(this) )
     this.object.interactive = true
 
+    window.player = entityToFollow
+
   }
 
   update () {

@@ -9,7 +9,21 @@ class Hero extends Unit {
     this.type = 'hero'
     this.name = options.name
 
+    this.lvl = 0
     this.speed = 0.15
+
+    this.pointsToDistribute = 1
+
+  }
+
+  levelUp ( attribute ) {
+
+    if ( this.pointsToDistribute > 0 ) {
+
+      this[ attribute ]++
+      this.pointsToDistribute--
+
+    }
 
   }
 

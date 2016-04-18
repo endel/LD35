@@ -1,5 +1,6 @@
 const uniqid = require('uniqid')
 const config = require('../config.js')
+const Hero = require('./Hero.js')
 
 var _units = new WeakMap()
 var interval = new WeakMap()
@@ -30,6 +31,10 @@ class Battle {
 
     unit.isBattling = true
     unit.battle = this
+
+    if ( unit instanceof Hero ) {
+      unit.destiny = null
+    }
 
     this.units[ unit.id ] = true
 
@@ -106,16 +111,17 @@ class Battle {
 
     this.percentage = ( side1Percent + side2Percent ) / 2
 
-    if ( this.hp[ side1 ] < 0 ) {
-      unitsSide1.map( unit => state.removeEntity ( unit ))
-      unitsSide2.map( unit => this.leave( unit ) )
-      this.destroy()
-    }
+    if ( this.hp[ side1 ] < 0 || this.hp[ side2 ] < 0 ) {
+      let winners = ( this.hp[ side1 ] < 0 ) ? unitsSide2 : unitsSide1
+      let loosers = ( this.hp[ side1 ] < 0 ) ? unitsSide1 : unitsSide2
 
-    if ( this.hp[ side2 ] < 0 ) {
-      unitsSide2.map( unit => state.removeEntity ( unit ))
-      unitsSide1.map( unit => this.leave( unit ) )
-      this.destroy()
+      let expToIncrement = this.getUnitsAttribute ( loosers, 'lvl' )
+
+      loosers.map( unit => state.removeEntity ( unit ))
+      winners.map( unit => {
+        this.leave( unit )
+        unit.incrementExp( expToIncrement )
+      } )
     }
 
   }

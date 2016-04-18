@@ -24,6 +24,18 @@ export default class Unit extends PIXI.Container {
 
   }
 
+  set attack ( attack ) {
+
+    this.attributes.updateAttributes( { attack: attack, defense: this.attributes.defense } )
+
+  }
+
+  set defense ( defense ) {
+
+    this.attributes.updateAttributes( { attack: this.attributes.attack, defense: defense } )
+
+  }
+
   set isBattling ( value ) {
 
     if ( value ) {

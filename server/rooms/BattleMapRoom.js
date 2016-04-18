@@ -31,11 +31,16 @@ class BattleMapRoom extends Room {
   onJoin (client, options) {
     let side = ( this.clients.length % 2 == 1 ) ? 0 : 1
 
-    this.heroes.set( client, this.state.createHero( {
+    let hero = this.state.createHero( {
       id: client.id,
       side: side,
       name: options.name
-    } ) )
+    } )
+
+    this.heroes.set( client, hero )
+
+    // immediately increment player to lvl 1, allowing user to distribute its first attribute
+    this.clock.setTimeout(() => { hero.lvl ++ }, 1000)
 
     console.log(client.id, 'joined', options)
   }
@@ -55,12 +60,21 @@ class BattleMapRoom extends Room {
 
       hero.moveTo ( value )
 
+    } else if ( key == 'up' ) {
+
+      // prevent upgrading other attributes
+      if ( value === "defense" || value === "attack" ) {
+        hero.levelUp ( value )
+      }
+
     }
 
   }
 
   onLeave (client) {
-    console.log(client.id, "left")
+
+    this.state.removeEntity( this.heroes.get( client ) )
+
   }
 
   tick () {

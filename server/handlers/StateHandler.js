@@ -168,8 +168,7 @@ class StateHandler {
           y: entity.position.y + ( Math.sin( angle ) * entity.speed ) * this.clock.deltaTime
         }
 
-        this.checkCollision( entity, angle, nextEntityPosition )
-        // let collidingWith =
+        // TODO: collision avoidance here
 
         this.entities[ id ].position.x = nextEntityPosition.x
         this.entities[ id ].position.y = nextEntityPosition.y
@@ -181,6 +180,8 @@ class StateHandler {
 
         // reached destiny, remove it
         if ( distance < 5 ) { entity.destiny = null }
+
+        this.checkCollision( entity, angle, nextEntityPosition )
 
       }
 
@@ -218,7 +219,12 @@ class StateHandler {
         Math.pow( entity.position.y - otherEntity.position.y, 2 )
       )
 
-      if ( distance < 32 && otherEntity instanceof Unit && !otherEntity.isBattling ) {
+      if ( distance < 60 && otherEntity instanceof Battle ) {
+
+        // join the battle!
+        otherEntity.join( entity )
+
+      } else if ( distance < 32 && otherEntity instanceof Unit && !otherEntity.isBattling ) {
 
         // create battle instance!
         let battle = new Battle( this )
@@ -230,11 +236,6 @@ class StateHandler {
         battle.join( otherEntity )
 
         this.addEntity( battle )
-
-      } else if ( distance < 60 && otherEntity instanceof Battle ) {
-
-        // join the battle!
-        otherEntity.join( entity )
 
       }
 
