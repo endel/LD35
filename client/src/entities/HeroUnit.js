@@ -65,9 +65,9 @@ export default class HeroUnit extends Unit {
   onRemovedFromContainer ( container ) {
 
     this.getEntity().detachAll()
-    container.parent.getEntity().detachAll()
 
     if ( this.isCurrentPlayer ) {
+      container.parent.getEntity().detachAll()
       container.parent.addBehaviour( new RespawnCountdown, this )
     }
 

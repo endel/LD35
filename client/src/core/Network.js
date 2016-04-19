@@ -1,6 +1,10 @@
 import Colyseus from 'colyseus.js'
 
-let client = new Colyseus("ws://localhost:3553")
+const url = ( window.location.href.match(/localhost/) )
+  ? "ws://localhost:3553"
+  : window.location.protocol.replace("http", "ws") + "//" + window.location.hostname
+
+let client = new Colyseus( url )
 let connectedRoom = null
 
 export function getClientId () {

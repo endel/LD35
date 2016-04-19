@@ -51,12 +51,12 @@
   </object>
  </objectgroup>
  <objectgroup color="#001cff" name="spawn-points">
-  <object type="tower" x="720" y="1680" width="48" height="48">
+  <object type="tower" x="720" y="1776" width="48" height="48">
    <properties>
     <property name="side" value="0"/>
    </properties>
   </object>
-  <object type="tower" x="720" y="192" width="48" height="48">
+  <object type="tower" x="720" y="96" width="48" height="48">
    <properties>
     <property name="side" value="1"/>
    </properties>

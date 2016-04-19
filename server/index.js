@@ -1,7 +1,6 @@
 "use strict";
 
-var _ = require('dotenv').config()
-  , tmxParser = require('tmx-parser')
+var tmxParser = require('tmx-parser')
 
   , colyseus = require('colyseus')
   , http = require('http')

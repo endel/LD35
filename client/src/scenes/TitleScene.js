@@ -181,6 +181,7 @@ export default class TitleScene extends PIXI.Container {
 
           this.respawnCount++
           this.addBehaviour( new ViewportFollow, entity )
+
         }
 
         break;

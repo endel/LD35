@@ -95,6 +95,12 @@ class Battle {
 
     let units = _units.get( this )
 
+    if ( units.length === 0 ) {
+      console.log( "Invalid battle instance, lets destroy it..." )
+      this.destroy()
+      return
+    }
+
     let side1 = units[ 0 ].side
     let unitsSide1 = units.filter(unit => unit.side === side1)
 
