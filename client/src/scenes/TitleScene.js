@@ -30,7 +30,9 @@ export default class TitleScene extends PIXI.Container {
     this.entities = {}
     this.respawnCount = 0
 
-    this.room = join( 'battle', { name: "Jake Badlands" } )
+    this.heroSide = null
+
+    this.room = join( 'battle', { name: window.prompt("Enter your nickname") || "" } )
 
     this.room.on( 'update', this.onRoomUpdate.bind(this) )
     this.room.on( 'error', ( err ) => console.error( arguments ) )
@@ -53,6 +55,30 @@ export default class TitleScene extends PIXI.Container {
       for ( let i=0; i < patches.length; i++ ) {
 
         let patch = patches [ i ]
+
+        if ( patch.op === "replace" && patch.path.match(/\/winner/) ) {
+
+          let message = ( patch.value === this.heroSide ) ? "You win!" : "You lost!"
+
+          let text = new PIXI.Text( message, {
+            font: '52px Arial',
+            fill: config.colors [ patch.value ],
+            align: 'center',
+            stroke: '#000000',
+            strokeThickness: 6
+          } )
+
+          text.anchor.set( 0.5 )
+          text.x = window.innerWidth / 2
+          text.y = window.innerHeight / 2
+
+          this.parent.addChild ( text )
+
+          // reload game in 5 seconds
+          App.clock.setTimeout(() => { window.location.href = window.location.href }, 5000)
+
+          return
+        }
 
         let [ _, entityId ] = patch.path.match(/\/entities\/([a-zA-Z0-9_-]+)/)
 
@@ -174,6 +200,8 @@ export default class TitleScene extends PIXI.Container {
         entity = new HeroUnit( data )
 
         if ( entityId === getClientId() ) {
+
+          this.heroSide = entity.side
 
           if ( this.respawnCount > 0 ) {
             App.sound.play('respawn')

@@ -34,7 +34,7 @@ export default class ViewportFollow extends Behaviour {
     this.moveRequest.x = point.x
     this.moveRequest.y = point.y
 
-    this.object.addChild( this.moveRequest )
+    this.object.scenery.addChild( this.moveRequest )
     this.moveRequest.activate()
 
     send(['move', point])

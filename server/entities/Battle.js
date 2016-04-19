@@ -142,6 +142,14 @@ class Battle {
 
         if ( unit instanceof Tower ) {
           unit.alive = false
+
+          if ( unit.isMainTower ) {
+
+            let sideWinner = (unit.side === side1) ? side2 : side1
+            state.gameOver( sideWinner )
+
+          }
+
         }
 
         if ( unit instanceof Hero ) {

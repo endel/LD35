@@ -16,7 +16,9 @@ class BattleMapRoom extends Room {
     this.heroes = new WeakMap()
 
     this.clock = new ClockTimer()
+
     this.setState(new StateHandler( this.clock, options.map ))
+    this.state.on( 'gameover', this.onGameOver.bind( this ) )
 
     this.tickInterval = setInterval(this.tick.bind(this), 1000 / TICK_RATE)
     this.started = false
@@ -24,7 +26,7 @@ class BattleMapRoom extends Room {
 
   requestJoin (options) {
 
-    return ( this.clients.length < 6 )
+    return ( this.clients.length < 8 )
 
   }
 
@@ -77,6 +79,13 @@ class BattleMapRoom extends Room {
   tick () {
 
     this.state.update()
+
+  }
+
+  onGameOver () {
+
+    // prevent other users from entering finished game
+    this.lock()
 
   }
 

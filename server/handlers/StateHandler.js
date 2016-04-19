@@ -8,9 +8,10 @@ const UnitSpawnPoint = require('../entities/UnitSpawnPoint.js')
 
 var playerId = 0
 
-class StateHandler {
+class StateHandler extends EventEmitter {
 
   constructor ( clock, map ) {
+    super()
 
     this.clock = clock
     this.map = []
@@ -20,6 +21,8 @@ class StateHandler {
     this.entities = {}
     this.spawnPositions = {}
     this.towers = []
+
+    this.winner = null
 
     this.size = {
       width: map.width * map.tileWidth,
@@ -259,12 +262,22 @@ class StateHandler {
 
   }
 
+  gameOver ( sideWinner ) {
+
+    this.clock.setTimeout( () => {
+      this.emit( 'gameover' )
+      this.winner = sideWinner
+    }, 1000 )
+
+  }
+
   toJSON () {
 
     return {
       size: this.size,
       map: this.map,
-      entities: this.entities
+      entities: this.entities,
+      winner: this.winner
     }
 
   }

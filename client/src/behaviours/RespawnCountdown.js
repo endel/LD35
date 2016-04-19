@@ -15,6 +15,7 @@ export default class RespawnCountdown extends Behaviour {
     })
     this.respawnText.x = hero.x
     this.respawnText.y = hero.y
+    this.respawnText.anchor.set( 0.5 )
 
     this.object.topLayer.addChild( this.respawnText )
 

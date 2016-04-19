@@ -14,6 +14,7 @@ class Tower extends Unit {
     this.alive = true
 
     this.isSpawnAllowed = this.data.properties.spawn != 0
+    this.isMainTower = !this.isSpawnAllowed
     this.isSpawning = true
 
     this.lastSpawnTime = 0
@@ -70,7 +71,6 @@ class Tower extends Unit {
     let nextEnemyTower = enemyTowers.filter( tower => tower.position.x === this.position.x )
 
     creep.destiny = nextEnemyTower[0].position
-
 
     // if ( nextEnemyTower.length > 0 ) {
     //   creep.destiny = nextEnemyTower[0].position
