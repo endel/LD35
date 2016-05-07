@@ -35,8 +35,8 @@
   </object>
   <object type="tower" x="720" y="1776" width="48" height="48">
    <properties>
-    <property name="attack" value="1"/>
-    <property name="defense" value="1"/>
+    <property name="attack" value="5"/>
+    <property name="defense" value="70"/>
     <property name="side" value="0"/>
     <property name="spawn" value="0"/>
    </properties>

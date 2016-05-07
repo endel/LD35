@@ -13,6 +13,7 @@ export default class ViewportFollow extends Behaviour {
     this.entityToFollow = entityToFollow
 
     this.object.on( 'click', this.onClick.bind(this) )
+    this.object.on( 'touchstart', this.onClick.bind(this) )
     this.object.interactive = true
 
   }

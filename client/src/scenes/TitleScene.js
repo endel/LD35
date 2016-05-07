@@ -230,16 +230,6 @@ export default class TitleScene extends PIXI.Container {
         let battlingEntities = Object.keys(data.units).map( entityId => this.entities[ entityId ] )
         entity = new BattleUnit( battlingEntities )
 
-    // let battleUnit = new BattleUnit([
-    //     { side: 0, attack: 1, defense: 1 },
-    //     { side: 0, attack: 1, defense: 2 },
-    //     { side: 2, attack: 2, defense: 1 },
-    //     { side: 2, attack: 1, defense: 3 },
-    // ])
-    // battleUnit.x = 300
-    // battleUnit.y = MAPSIZE
-    // this.addChild( battleUnit )
-
         break;
 
       case "spawn-point":

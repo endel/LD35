@@ -19,11 +19,13 @@ export default class LevelUp extends PIXI.Container {
 
       this.attackButton = this.createButton('sword.png')
       this.attackButton.on( 'click', this.upgradeAttribute.bind(this, 'attack') )
+      this.attackButton.on( 'touchstart', this.upgradeAttribute.bind(this, 'attack') )
       this.attackButton.x -= this.circle.width * 1.1
       this.addChild( this.attackButton )
 
       this.defenseButton = this.createButton('shield.png')
       this.defenseButton.on( 'click', this.upgradeAttribute.bind(this, 'defense') )
+      this.defenseButton.on( 'touchstart', this.upgradeAttribute.bind(this, 'defense') )
       this.defenseButton.x += this.circle.width * 1.1
       this.addChild( this.defenseButton )
 

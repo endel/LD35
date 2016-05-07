@@ -36,6 +36,12 @@ class App {
     }
 
     this.componentSystem = createComponentSystem( PIXI.DisplayObject )
+
+    window.addEventListener( 'resize', this.onResize.bind(this) )
+  }
+
+  onResize ( e ) {
+    this.renderer.resize( window.innerWidth, window.innerHeight )
   }
 
   update () {
